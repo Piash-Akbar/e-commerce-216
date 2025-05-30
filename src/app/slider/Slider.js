@@ -18,7 +18,7 @@ export default function Slider({ srcs }) {
         <div
           key={index}
           className={`absolute inset-0 transition-opacity duration-1000 ${
-            index === currentIndex ? "opacity-80 z-10" : "opacity-0 z-0"
+            index === currentIndex ? "opacity-100 z-10" : "opacity-0 z-0"
           }`}
         >
           <Image

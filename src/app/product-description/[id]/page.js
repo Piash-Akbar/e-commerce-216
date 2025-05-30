@@ -4,6 +4,9 @@ import { useFirebase } from "@/app/context/firebase";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Navbar from "@/app/navbar.js/Navbar";
+import CartBtn from "@/app/addToCartBtn/CartButton";
+import { Car } from "lucide-react";
+import AddCartBtn from "@/app/addToCartBtn/AddCartBtn";
 
 export default function ProductDescriptionPage() {
   const { id } = useParams();
@@ -32,7 +35,8 @@ export default function ProductDescriptionPage() {
         <p className="text-lg text-gray-800">Tk.{product.price}</p>
         <p className="mt-2 text-gray-700">{product.description}</p>
 
-        <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 hover:cursor-pointer">Add to Cart</button>
+
+        <AddCartBtn key={product.id} product={product} />
       </div>
       
       </>)

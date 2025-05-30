@@ -33,7 +33,7 @@ export default function CartPage() {
       <div className="space-y-6">
         {cartItems.map((item) => (
           <div
-            key={item.id}
+            key={item.createdAt}
             className="flex items-center justify-between bg-white p-4 rounded-lg shadow"
           >
             <div className="flex items-center gap-4">
