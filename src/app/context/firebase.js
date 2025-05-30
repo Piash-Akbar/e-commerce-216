@@ -16,8 +16,14 @@ import {
   getFirestore,
   getDoc,
   setDoc,
+  addDoc,
+  serverTimestamp,
+  updateDoc,
+  collection,
+  getDocs,
 } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
+
 
 // Create context
 const FirebaseContext = createContext();
@@ -43,6 +49,7 @@ const provider = new GoogleAuthProvider();
 export const FirebaseProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState([]);
 
   // Create user profile with default role
   const createUserProfile = async (user, role = "customer") => {
@@ -101,6 +108,58 @@ export const FirebaseProvider = ({ children }) => {
     await signOut(auth);
   };
 
+
+  //Put data in firebase (Goes here)
+  const handleCreateNewListing = async (productData) => {
+    try {
+      const docRef = await addDoc(collection(db, "products"), {
+        ...productData,
+        createdAt: serverTimestamp(),
+        addedBy: user.uid,
+        email: user.email,
+        creator: user.displayName || "",
+
+      });
+      console.log("Product added with ID:", docRef.id);
+    } catch (error) {
+      console.error("Error adding product:", error);
+    }
+  };
+
+  //Fetch all data from firebase (Goes here)
+  const handleGetAllProducts = async () => {
+    try {
+      const productsRef = collection(db, "products");
+      const snapshot = await getDocs(productsRef);
+      const productsList = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setProducts(productsList);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  }
+
+  //Fetch Individual data using id from firebase (Goes here)
+  const handleGetProductById = async (id) => {
+    try {
+      const productRef = doc(db, "products", id);
+      const docSnap = await getDoc(productRef);
+      if (docSnap.exists()) {
+        return docSnap.data();
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.error("Error fetching product:", error);
+      return null;
+    }
+  }
+
+
+
+
   return (
     <FirebaseContext.Provider
       value={{
@@ -114,6 +173,10 @@ export const FirebaseProvider = ({ children }) => {
         signupWithGoogle,
         logOut,
         createUserProfile,
+        handleCreateNewListing,
+        handleGetAllProducts,
+        products,
+        handleGetProductById,
       }}
     >
       {children}

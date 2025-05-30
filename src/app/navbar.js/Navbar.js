@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useFirebase } from "../context/firebase";
+import CartBtn from "../addToCartBtn/CartButton";
 
 export default function Navbar() {
   const { user, logOut } = useFirebase();
@@ -19,18 +20,33 @@ export default function Navbar() {
 
         {user && user.role === "superadmin" && (
           <Link href="/superadmin" className="text-gray-600 hover:text-black">
+            SuperAdmin
+          </Link>
+        )}
+
+        {user && (user.role === "admin" || user.role === "superadmin") && (
+          <Link href="/admin" className="text-gray-600 hover:text-black">
             Admin
           </Link>
         )}
+
+
+
+
+
+
+
+
 
         {user ? (
           <>
             <span className="text-sm text-gray-500">
               {user.email} ({user.role})
             </span>
+            <CartBtn />
             <button
               onClick={logOut}
-              className="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600"
+              className="bg-red-500 text-white px-4 py-1 rounded hover:bg-red-600 hover:cursor-pointer"
             >
               Logout
             </button>

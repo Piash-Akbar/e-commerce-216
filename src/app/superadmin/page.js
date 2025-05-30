@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
 import { useFirebase } from "../context/firebase";
+import Navbar from "../navbar.js/Navbar";
 
 export default function AdminPage() {
   const { user, db } = useFirebase();
@@ -55,6 +56,8 @@ export default function AdminPage() {
   }
 
   return (
+    <>
+    <Navbar />
     <div className="p-8">
       <h1 className="text-2xl font-bold mb-4">Admin Dashboard</h1>
       <table className="w-full border">
@@ -103,5 +106,6 @@ export default function AdminPage() {
         </tbody>
       </table>
     </div>
+    </>
   );
 }
