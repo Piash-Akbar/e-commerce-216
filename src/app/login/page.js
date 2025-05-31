@@ -48,10 +48,10 @@ export default function LoginPage() {
 
         {error && <p className="text-red-500 mb-2">{error}</p>}
 
-        <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+        <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 hover:cursor-pointer">
           Log In
         </button>
-        <p> Do not have an account? <a href="/signup" className="text-blue-500">Sign Up</a></p>
+        <p> Do not have an account? <a href="/signup" className="text-blue-500 hover:cursor-pointer">Sign Up</a></p>
       </form>
     </div>
   );
