@@ -64,6 +64,7 @@ const ViewOrders = () => {
             key={order.id}
             className="border p-4 mb-4 rounded-md shadow-sm"
           >
+            <button className="px-4 py-2 bg-black text-white rounded hover:bg-white hover:text-black" onClick={() => window.location.href = `/admin/viewOrder/${order.id}`}>View Order Details</button>
             <h2 className="text-lg font-semibold mb-2">Order ID: {order.id}</h2>
             <p>Status: <span className="font-medium">{order.confirmationStatus}</span></p>
             <p>Total: ${order.totalAmount}</p>
@@ -79,6 +80,9 @@ const ViewOrders = () => {
                 ))}
             </ul>
 
+            {order.confirmationStatus == "Pending" && (
+              
+
             <div className="mt-4 flex gap-2">
               <button
                 onClick={() => updateOrderStatus(order.id, "Confirmed")}
@@ -93,6 +97,8 @@ const ViewOrders = () => {
                 Decline
               </button>
             </div>
+            )}
+                <p>Confirmation Status: <b>{order.confirmationStatus}</b></p>
           </div>
         ))
       )}
