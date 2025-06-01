@@ -3,9 +3,22 @@
 import { useCart } from '../context/cartContext';
 import Image from 'next/image';
 import Navbar from '../navbar.js/Navbar';
+import { useFirebase } from '../context/firebase';
 
 export default function CartPage() {
   const { cartItems, removeFromCart, clearCart } = useCart();
+  const { db,placeOrder } = useFirebase();
+  const handleCheckout = async () => {
+    const orderData = {
+      items: cartItems,
+      totalAmount: cartItems.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0
+      ),
+    };
+    await placeOrder(orderData);
+    clearCart();
+  }
 
   const totalPrice = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -75,7 +88,7 @@ export default function CartPage() {
             Clear Cart
           </button>
           <button
-            onClick={() => alert('Proceed to checkout')}
+            onClick={() => handleCheckout()}
             className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition hover:cursor-pointer"
           >
             Checkout

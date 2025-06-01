@@ -25,6 +25,7 @@ import {
   where,
   deleteDoc,
   onSnapshot,
+  or,
 
 } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
@@ -207,9 +208,38 @@ export const FirebaseProvider = ({ children }) => {
     try {
       await deleteDoc(doc(db, "products", id));
       alert("Product deleted.");
-      router.push("/");
+      window.location.reload();
     } catch (err) {
       console.error("Error deleting product:", err);
+    }
+  };
+
+  const placeOrder = async (orderData) => {
+    try {
+      const docRef = await addDoc(collection(db, "orders"), {
+        ...orderData,
+        orderedBy: user.uid, // Add this
+        createdAt: serverTimestamp(),
+        confirmationStatus: "Pending",
+      });
+      console.log("Order placed with ID:", docRef.id);
+    } catch (error) {
+      console.error("Error adding order:", error);
+    }
+  };
+  
+
+  const viewOrders = async () => {
+    try {
+      const ordersRef = collection(db, "orders");
+      const snapshot = await getDocs(ordersRef);
+      const ordersList = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setOrders(ordersList);
+    } catch (error) {
+      console.error("Error fetching orders:", error);
     }
   };
   
@@ -235,7 +265,9 @@ export const FirebaseProvider = ({ children }) => {
         fetchMyProducts,
         myProducts,
         updateMyProducts,
-        handleDelete
+        handleDelete,
+        placeOrder,
+        viewOrders
       }}
     >
       {children}

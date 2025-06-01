@@ -35,7 +35,7 @@ export default function MyBooksPage() {
         {myProducts.map((product) => (
           <AdminCard
             key={product.createdAt}
-            product={{...product, imageUrl: "https://cdn.mos.cms.futurecdn.net/kbrdKHwjXBwSp9uiY8hejP-1200-80.jpg"}}
+            product={product}
             // onUpdateProduct={handleUpdateProduct}
           />
         ))}

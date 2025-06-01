@@ -29,7 +29,7 @@ export default function HomePage() {
       <Slider srcs={srcs}/>
       <div className="flex flex-wrap justify-around items-center bg-gray-100 pt-10 text-black">
         {products.map((product, id) => (
-          <Card key={id} product={{ ...product, imageUrl: "https://cdn.mos.cms.futurecdn.net/kbrdKHwjXBwSp9uiY8hejP-1200-80.jpg"}} />
+          <Card key={id} product={product} />
         ))};
       </div>
 
@@ -37,7 +37,7 @@ export default function HomePage() {
 
       <div className="flex flex-wrap justify-around items-center bg-gray-100 text-black">
         {products.map((product, id) => (
-            <Card key={id} product={{ ...product, imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVZX5ASHgJXuvxGmtW2kmm1ojYX0BewY8dOL2gIZNy7J3_eC1kDnl0KZhZwHDmo-TL4dM&usqp=CAU"}} />
+            <Card key={id} product={product} />
         ))}
 
       </div>

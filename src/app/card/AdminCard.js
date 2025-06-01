@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import AddCartBtn from "../addToCartBtn/AddCartBtn";
+import DeleteBtn from "../addToCartBtn/DeleteBtn";
 
 function TruncatedDescription({ description = "", productId }) {
   const words = description.split(" ");
@@ -29,13 +30,6 @@ export default function Card({ product }) {
     router.push(`/admin/editProduct/${id}`);
   };
 
-  const handleDeleteClick = () => {
-    // TODO: Add your delete logic here (e.g., call Firebase delete)
-    if (confirm("Are you sure you want to delete this product?")) {
-      console.log("Deleting product with ID:", id);
-      // Example: await deleteProduct(id);
-    }
-  };
 
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white text-black mb-4 w-1/3 h-full">
@@ -52,12 +46,7 @@ export default function Card({ product }) {
         >
           Edit
         </button>
-        <button
-          onClick={handleDeleteClick}
-          className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
-        >
-          Delete
-        </button>
+        <DeleteBtn product={product} />
       </div>
     </div>
   );
