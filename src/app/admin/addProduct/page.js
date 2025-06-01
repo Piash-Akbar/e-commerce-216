@@ -12,6 +12,7 @@ export default function AdminPage() {
     price: "",
     description: "",
     imageUrl: "",
+    category: "",
   });
 
   const handleCreateProduct = async (event) => {
@@ -22,8 +23,9 @@ export default function AdminPage() {
       productName: formData.get("name"),
       price: formData.get("price"),
       description: formData.get("description"),
-
       // imageUrl: formData.get("image"), // Optional: Implement file upload if needed
+      category: formData.get("category"),
+
     };
 
     await handleCreateNewListing(productData);
@@ -47,7 +49,7 @@ export default function AdminPage() {
                 type="file"
                 name="image"
                 id="image"
-                className="w-full p-2.5 border rounded-xl bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full p-2.5 border rounded-xl bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-400 hover:cursor-pointer"
               />
             </div>
 
@@ -90,9 +92,29 @@ export default function AdminPage() {
               />
             </div>
 
+            <div>
+              <label htmlFor="category" className="block text-gray-700 mb-1">Category</label>
+              <select
+                name="category"
+                id="category"
+                className="w-full p-2.5 border rounded-xl bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-400 hover:cursor-pointer"
+              >
+                
+                <option value="blank">Select a category</option>
+                <option value="sounds" >Sounds</option>
+                <option value="electronics">Electronics</option>
+                <option value="watches">Watches</option>
+                <option value="clothing">Clothing</option>
+                <option value="accessories" >Accessories</option>
+                <option value="jewelry">Jewelry</option>
+                <option value="homeDecor">Home Decor</option>
+              </select>
+            </div>
+
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white font-semibold py-2.5 rounded-xl hover:bg-blue-700 transition duration-200 hover:scale-105"
+              className="w-full bg-blue-600 text-white font-semibold py-2.5 rounded-xl hover:bg-blue-700 transition duration-200 hover:scale-105 hover:cursor-pointer"
+              disabled={!user}
             >
               Submit
             </button>

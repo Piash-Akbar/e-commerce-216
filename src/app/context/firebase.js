@@ -21,6 +21,11 @@ import {
   updateDoc,
   collection,
   getDocs,
+  query,
+  where,
+  deleteDoc,
+  onSnapshot,
+
 } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
@@ -50,6 +55,7 @@ export const FirebaseProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
+  const [myProducts, setMyProducts] = useState([]);
 
   // Create user profile with default role
   const createUserProfile = async (user, role = "customer") => {
@@ -159,6 +165,55 @@ export const FirebaseProvider = ({ children }) => {
 
 
 
+  //Fetch products added by admin
+  const fetchMyProducts = async (uid) => {
+    if (!uid) return [];
+  
+    try {
+      const productsRef = collection(db, "products");
+      const q = query(productsRef, where("addedBy", "==", uid));
+      const snapshot = await getDocs(q);
+      const productsList = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      return productsList; // ✅ return data
+    } catch (error) {
+      console.error("Error fetching user's products:", error);
+      return [];
+    }
+  };
+
+  
+  const updateMyProducts = async (db, id, productData) => {
+    if (!id) return;
+  
+    try {
+      const productRef = doc(db, "products", id);
+      await updateDoc(productRef, { ...productData });
+      // You can optionally return something
+    } catch (error) {
+      console.error("Error updating product:", error);
+      throw error;
+    }
+  };
+    
+
+  const handleDelete = async (id) => {
+    if (!id || !user) return;
+    const confirmed = window.confirm("Are you sure you want to delete this product?");
+    if (!confirmed) return;
+  
+    try {
+      await deleteDoc(doc(db, "products", id));
+      alert("Product deleted.");
+      router.push("/");
+    } catch (err) {
+      console.error("Error deleting product:", err);
+    }
+  };
+  
+  
 
   return (
     <FirebaseContext.Provider
@@ -177,6 +232,10 @@ export const FirebaseProvider = ({ children }) => {
         handleGetAllProducts,
         products,
         handleGetProductById,
+        fetchMyProducts,
+        myProducts,
+        updateMyProducts,
+        handleDelete
       }}
     >
       {children}

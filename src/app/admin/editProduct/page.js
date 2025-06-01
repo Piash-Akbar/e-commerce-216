@@ -1,19 +1,45 @@
-'use client'
+'use client';
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useFirebase } from "../../context/firebase";
-import { useParams } from "next/navigation";
+import { useEffect, useState } from 'react';
+import { useFirebase } from '@/app/context/firebase';
+import Navbar from '@/app/navbar.js/Navbar';
+import AdminCard from '../../card/AdminCard';
 
-const EditProduct = () => {
+export default function MyBooksPage() {
+  const { user, db, fetchMyProducts } = useFirebase();
+  const [myProducts, setMyProducts] = useState([]);
+
+  // Fetch only the user's added products
+  useEffect(() => {
+    if (!user?.uid) return;
+  
+    const fetchData = async () => {
+      const products = await fetchMyProducts(user.uid); // ✅ wait for data
+      setMyProducts(products); // ✅ now products is real data
+      console.log("Fetched user's products:", products);
+    };
+  
+    fetchData();
+  }, [user]);
   
 
-    return (
-        <div className="flex flex-col justify-center items-center min-h-screen bg-gray-100 px-4 text-black">
-            <h1 className="text-3xl font-bold">Shows all my products</h1>
-            <h2 className="text-2xl font-bold">And can be edited</h2>
-        </div>
-    );
+  
 
-};
-export default EditProduct
+
+
+
+  return (
+    <>
+      <Navbar />
+      <div className="flex flex-wrap justify-center">
+        {myProducts.map((product) => (
+          <AdminCard
+            key={product.createdAt}
+            product={{...product, imageUrl: "https://cdn.mos.cms.futurecdn.net/kbrdKHwjXBwSp9uiY8hejP-1200-80.jpg"}}
+            // onUpdateProduct={handleUpdateProduct}
+          />
+        ))}
+      </div>
+    </>
+  );
+}
