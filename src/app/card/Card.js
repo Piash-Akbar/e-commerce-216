@@ -29,7 +29,7 @@ function TruncatedDescription({ description = "", productId }) {
 
 
 export default function Card({ product }) {
-  const { productName, price, description, imageUrl, id } = product;
+  const { productName, price, description, imageUrl, id, addedBy } = product;
 
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white text-black mb-4 w-1/3 h-full">
@@ -37,6 +37,7 @@ export default function Card({ product }) {
       <div className="px-3 py-2">
         <div className="font-bold text-xl mb-2">{productName}</div>
         <TruncatedDescription description={description} productId={id} />
+        <p>Seller:{addedBy}</p>
         <p className="text-lg font-semibold mt-2">${price}</p>
       </div>
       <div className="flex px-3 py-2">

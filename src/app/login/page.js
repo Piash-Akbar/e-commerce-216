@@ -26,6 +26,7 @@ export default function LoginPage() {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 text-black">
       <form onSubmit={handleLogin} className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm">
+        <p>Use: <br /> email: asd@jkl.com <br /> password: asdjkl <br /> to login as <b>superadmin</b>  </p>
         <h2 className="text-2xl font-semibold mb-4">Login</h2>
 
         <input

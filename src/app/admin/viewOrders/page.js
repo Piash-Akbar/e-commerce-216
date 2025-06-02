@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { doc, updateDoc } from "firebase/firestore";
 import { useFirebase } from "../../context/firebase";
+import Navbar from "@/app/navbar.js/Navbar";
 
 const ViewOrders = () => {
   const { user, db } = useFirebase();
@@ -53,6 +54,8 @@ const ViewOrders = () => {
   if (loading) return <p>Loading orders...</p>;
 
   return (
+    <>
+    <Navbar />
     <div className="p-6 max-w-4xl mx-auto">
       <h1 className="text-2xl font-bold mb-4">Orders Containing Your Products</h1>
 
@@ -64,7 +67,7 @@ const ViewOrders = () => {
             key={order.id}
             className="border p-4 mb-4 rounded-md shadow-sm"
           >
-            <button className="px-4 py-2 bg-black text-white rounded hover:bg-white hover:text-black" onClick={() => window.location.href = `/admin/viewOrder/${order.id}`}>View Order Details</button>
+            <button className="px-4 py-2 bg-black text-white rounded hover:bg-white hover:text-black" onClick={() => window.location.href = `/admin/viewOrders/${order.id}`}>View Order Details</button>
             <h2 className="text-lg font-semibold mb-2">Order ID: {order.id}</h2>
             <p>Status: <span className="font-medium">{order.confirmationStatus}</span></p>
             <p>Total: ${order.totalAmount}</p>
@@ -103,6 +106,7 @@ const ViewOrders = () => {
         ))
       )}
     </div>
+    </>
   );
 };
 
