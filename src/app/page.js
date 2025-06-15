@@ -35,7 +35,7 @@ export default function HomePage() {
 
 
 
-      <div className="flex flex-wrap justify-around items-center bg-gray-100 text-black">
+      <div className="flex flex-wrap -mx-2 justify-around items-center bg-gray-100 text-black">
         {products.map((product, id) => (
             <Card key={id} product={product} />
         ))};
