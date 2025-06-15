@@ -30,6 +30,7 @@ export default function MyBooksPage() {
 
   return (
     <>
+    
       <Navbar />
       <div className="flex flex-wrap justify-center">
         {myProducts.map((product) => (

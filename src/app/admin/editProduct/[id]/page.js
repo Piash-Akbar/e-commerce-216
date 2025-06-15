@@ -5,6 +5,7 @@ import { useRouter, useParams } from "next/navigation";
 import { useFirebase } from "@/app/context/firebase";
 import { doc, getDoc, deleteDoc } from "firebase/firestore";
 import Navbar from "@/app/navbar.js/Navbar";
+import LoadingSpinner from "@/app/loading/LoadingSpinner";
 
 export default function EditProductPage() {
   const { db, user, updateMyProducts, handleDelete } = useFirebase();
@@ -92,11 +93,12 @@ export default function EditProductPage() {
   };
   
 
-  if (loading) return <p className="text-center mt-10">Loading...</p>;
+  if (loading) return <LoadingSpinner />;
 
   return (
     <>
       <Navbar />
+      
       <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4 text-black">
         <div className="w-full max-w-md bg-white shadow-md rounded-2xl p-8">
           <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">

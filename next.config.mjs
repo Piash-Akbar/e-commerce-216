@@ -1,9 +1,30 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-    images: {
-      domains: ['images.unsplash.com','ix-www.imgix.net',"drive.google.com","firebasestorage.googleapis.com","imgur.com"],
-    },
-  };
+// /** @type {import('next').NextConfig} */
+// const nextConfig = {
+//     images: {
+//       domains: ['images.unsplash.com','ix-www.imgix.net',"drive.google.com","firebasestorage.googleapis.com","imgur.com"],
+//     },
+//   };
   
-  export default nextConfig;
+//   export default nextConfig;
+
+
+
+  /** @type {import('next').NextConfig} */
+const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "images.pexels.com",
+      },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+      },
+    ],
+  },
+};
+
+export default nextConfig;
+
   
