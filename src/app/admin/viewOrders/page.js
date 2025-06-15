@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { doc, updateDoc } from "firebase/firestore";
 import { useFirebase } from "../../context/firebase";
 import Navbar from "@/app/navbar.js/Navbar";
+import LoadingSpinner from "@/app/loading/LoadingSpinner";
 
 const ViewOrders = () => {
   const { user, db } = useFirebase();
@@ -16,7 +17,7 @@ const ViewOrders = () => {
       const { getDocs, collection } = await import("firebase/firestore");
 
       const ordersSnapshot = await getDocs(collection(db, "orders"));
-      const allOrders = ordersSnapshot.docs.map(doc => ({
+      const allOrders = ordersSnapshot.docs.map(doc => ( {
         id: doc.id,
         ...doc.data(),
       }));
@@ -51,7 +52,7 @@ const ViewOrders = () => {
     }
   }, [user]);
 
-  if (loading) return <p>Loading orders...</p>;
+  if (loading) return <LoadingSpinner />;
 
   return (
     <>
@@ -77,7 +78,7 @@ const ViewOrders = () => {
               {order.items
                 .filter(item => item.addedBy === user.uid)
                 .map(item => (
-                  <li key={item.id}>
+                  <li key={item.id+item.createdAt}>
                     {item.productName} (x{item.quantity}) – ${item.price}
                   </li>
                 ))}

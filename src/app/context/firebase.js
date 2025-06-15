@@ -66,6 +66,7 @@ export const FirebaseProvider = ({ children }) => {
       await setDoc(userRef, {
         email: user.email,
         name: user.displayName || "",
+        photoURL: user.photoURL || "",
         role,
       });
     }
