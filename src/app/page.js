@@ -4,6 +4,7 @@ import { useFirebase } from "./context/firebase";
 import Navbar from "./navbar.js/Navbar";
 import Card from "./card/Card";
 import Slider from "./slider/Slider";
+import LoadingSpinner from "./loading/LoadingSpinner";
 
 export default function HomePage() {
   const { logOut, user, handleGetAllProducts,products } = useFirebase();
@@ -26,12 +27,17 @@ export default function HomePage() {
   return (
     <>
       <Navbar />
+      {products.length === 0 ? <LoadingSpinner /> :
+      
+      <>
       <Slider srcs={srcs}/>
       <div className="flex flex-wrap justify-around items-center bg-gray-100 pt-10 text-black">
         {products.map((product, id) => (
           <Card key={id} product={product} />
         ))}
       </div>
+      </>
+      }
 
 
 
